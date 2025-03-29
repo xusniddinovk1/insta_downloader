@@ -17,7 +17,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
             await update.message.reply_video(
                 video=data,
-                caption="<b> @instagram_downnloaderr_bot </b>",
+                caption="<b> @instagram_downnloadeer_bot </b>",
                 parse_mode = "HTML"
             )
 
