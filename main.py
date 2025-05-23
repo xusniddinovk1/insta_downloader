@@ -2,6 +2,8 @@ from config import BOT_TOKEN
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
 from messages import message_handler
+from database import Database
+from checking import check_user
 
 # Logging
 import logging
@@ -13,12 +15,22 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 
 logger = logging.getLogger(__name__)
 
+db = Database('insta_save.db')
+
 
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update.message.reply_photo(
-        photo=open("./media/logo.jpg", "rb"),
-        caption=f"Assalomu aleykum {update.effective_user.first_name}\nBotimizga Xush kelibsiz!"
-    )
+    user = update.effective_user
+
+    if check_user(user):
+        await update.message.reply_photo(
+            photo=open("./media/logo.jpg", "rb"),
+            caption=f"Assalomu aleykum {check_user(user).get('full_name')}\nBotimizga Xush kelibsiz!"
+        )
+    else:
+        await update.message.reply_photo(
+            photo=open("./media/logo.jpg", "rb"),
+            caption=f"Assalomu aleykum !\nBotimizga Xush kelibsiz!Bu bot orqali siz Instagram, Facebook, TIkTok dan video yulab olishingiz mumkin"
+        )
 
 
 def main():
