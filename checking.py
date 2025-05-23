@@ -18,5 +18,4 @@ def check_user(user):
 
 def check_channel(user):
     channels = db.get_channels()
-    print(channels)
     return channels

@@ -7,6 +7,7 @@ from downloader import insta_downloader
 
 db = Database('insta_save.db')
 
+
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = update.message.text
     user = update.effective_user
