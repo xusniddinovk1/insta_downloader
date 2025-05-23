@@ -14,6 +14,10 @@ def insta_downloader(video_url: str):
 
     response = requests.post(url, json=payload, headers=headers)
 
-    return response.json().get('medias')[0].get('url')
+    res = json.loads(response.text)
+    if res.get("error"):
+        return False
+
+    return res.get('medias')[0].get('url')
 
 # print(insta_downloader("https://www.tiktok.com/@yeuphimzz/video/7237370304337628442"))
