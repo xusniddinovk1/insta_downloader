@@ -8,14 +8,14 @@ def check_user(user):
     if db_user:
         return db_user
     else:
-        # user create
-        db.create_user(full_name=user.full_name,
-                       username=user.username,
-                       chat_id=user.id,
-                       lang='uz')
-        return False
+        full_name = f"{user.first_name or ''} {user.last_name or ''}".strip()
+        username = user.username or ""
 
-
-def check_channel(user):
-    channels = db.get_channels()
-    return channels
+        # Yangi foydalanuvchi yaratish
+        db.create_user(
+            full_name=full_name,
+            username=username,
+            chat_id=user.id,
+            lang='uz'
+        )
+        return None  # yoki return "created"
