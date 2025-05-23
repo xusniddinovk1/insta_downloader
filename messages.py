@@ -13,7 +13,7 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         if data:
             await update.message.reply_video(
                 video=data,
-                caption='📌 <b>@instagraam_savve_bot<b>',
+                caption='📌 <b>@instagraam_savve_bot</b>',
                 parse_mode='HTML'
             )
         else:
