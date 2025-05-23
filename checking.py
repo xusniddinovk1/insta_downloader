@@ -14,3 +14,9 @@ def check_user(user):
                        chat_id=user.id,
                        lang='uz')
         return False
+
+
+def check_channel(user):
+    channels = db.get_channels()
+    print(channels)
+    return channels
