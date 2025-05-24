@@ -1,6 +1,7 @@
 from telegram.error import BadRequest
 from database import Database
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardButton, InlineKeyboardMarkup, \
+    ReplyKeyboardRemove
 from telegram.ext import ContextTypes
 from validators import url
 from checking import check_user
@@ -13,13 +14,74 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     message = update.message.text
     user = update.effective_user
 
-    if context.user_data['state'] == 'ADMIN':
+    state = context.user_data.get('state')
+    if state == 'ADMIN_HOME':
         if message == "➕ Kanal qo'shish":
-            pass
+            context.user_data['state'] = 'ADMIN_CHANNEL'
+            await update.message.reply_text(
+                text="Kanal qo'shish uchun namuna\n\n"
+                     "Python Sources++@python_sources1"
+            )
         elif message == "✔️ Reklama qo'shish":
-            pass
+            context.user_data['state'] = 'ADMIN_ADS'
+
+            await update.message.reply_text(
+                text='Reklama matnini kiriting'
+            )
         elif message == "❌ Chiqish":
-            pass
+            del context.user_data['state']
+
+            await update.message.reply_text(
+                text='Siz admin paneldan chiqdingiz',
+                reply_markup=ReplyKeyboardRemove()
+            )
+
+    elif state == "ADMIN_CHANNEL":
+        data = message.split('++')
+        try:
+            if len(data) == 2:
+                status = await context.bot.get_chat_member(
+                    chat_id=data[-1],
+                    user_id=context.bot.id
+                )
+                if "Administrator" in status.status.title():
+                    db.create_channel(
+                        name=data[0],
+                        link=data[1]
+                    )
+                    context.user_data['state'] = 'ADMIN_HOME'
+                    await update.message.reply_text(
+                        text=f"{data[0]} qo'shildi",
+                        reply_markup=ReplyKeyboardMarkup([
+                            [KeyboardButton("➕ Kanal qo'shish"), KeyboardButton("✔️ Reklama qo'shish")],
+                            [KeyboardButton("❌ Chiqish")]
+                        ], resize_keyboard=True)
+                    )
+        except:
+            await update.message.reply_html(
+                text="❌ Botni admin qiling!",
+            )
+    elif state == "ADMIN_ADS":
+        users = db.get_users()
+
+        k = 0
+        for user in users:
+            try:
+                await context.bot.send_message(
+                    chat_id=user.get('chat_id'),
+                    text=message,
+                    parse_mode='HTML'
+                )
+                k += 1
+            except:
+                print('Error')
+        # change state
+        context.user_data['state'] = "ADMIN_HOME"
+
+        await update.message.reply_text(
+            text=f"Reklama {k} ta foydalanuvchiga jo'natildi"
+        )
+
     else:
         if not user:
             await update.message.reply_text("Foydalanuvchi aniqlanmadi.")
