@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 
@@ -7,8 +8,8 @@ def insta_downloader(video_url: str):
 
     payload = {"url": video_url}
     headers = {
-        "x-rapidapi-key": "476013b9aemsh624b1818a0fccf4p190c87jsn4bab67de2049",
-        "x-rapidapi-host": "auto-download-all-in-one.p.rapidapi.com",
+        "x-rapidapi-key": os.getenv('RAPIDAPI_KEY'),
+        "x-rapidapi-host": os.getenv('RAPIDAPI_HOST'),
         "Content-Type": "application/json"
     }
 
