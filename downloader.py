@@ -19,5 +19,3 @@ def insta_downloader(video_url: str):
         return False
 
     return res.get('medias')[0].get('url')
-
-# print(insta_downloader("https://www.tiktok.com/@yeuphimzz/video/7237370304337628442"))
