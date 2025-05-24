@@ -34,7 +34,7 @@ async def check_channel_membership(update: Update, context: ContextTypes.DEFAULT
 
     if any(status == 'left' for status in channel_status):
         await update.message.reply_html(
-            "Kanalimizga obuna bo'ling",
+            "Botdan foydalanish uchun kanalimizga obuna bo'ling",
             reply_markup=InlineKeyboardMarkup(channel_buttons)
         )
         return False
