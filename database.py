@@ -19,7 +19,7 @@ class Database:
     def get_users(self):
         self.cur.execute("""SELECT * FROM users""")
         users = dict_fetchall(self.cur)
-        return users
+        return users    
 
     def get_channels(self):
         self.cur.execute("""SELECT * FROM channels; """, )
