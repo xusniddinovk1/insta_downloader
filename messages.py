@@ -5,6 +5,7 @@ from handlers.admin_panel import handle_admin_state
 from handlers.check_channel import check_channel_membership
 from handlers.downloader_handler import handle_instagram_download
 
+
 async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     message = update.message.text

@@ -5,6 +5,7 @@ from database import Database
 
 db = Database('insta_save.db')
 
+
 async def check_channel_membership(update: Update, context: ContextTypes.DEFAULT_TYPE, user) -> bool:
     channels = db.get_channels()
     channel_status = []

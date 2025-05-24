@@ -12,7 +12,7 @@ async def admin_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         context.user_data['state'] = 'ADMIN_HOME'
 
         await update.message.reply_html(
-            text='Admin panelga xush kelibsiz',
+            text='Admin panelga kirdingiz',
             reply_markup=ReplyKeyboardMarkup([
                 [KeyboardButton("➕ Kanal qo'shish"), KeyboardButton("✔️ Reklama qo'shish")],
                 [KeyboardButton("❌ Chiqish")]

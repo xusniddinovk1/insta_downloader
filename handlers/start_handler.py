@@ -2,6 +2,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 from services.checking import check_user
 
+
 async def start_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
 

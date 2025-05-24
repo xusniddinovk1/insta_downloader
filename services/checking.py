@@ -11,11 +11,11 @@ def check_user(user):
         full_name = f"{user.first_name or ''} {user.last_name or ''}".strip()
         username = user.username or ""
 
-        # Yangi foydalanuvchi yaratish
+        # create new user
         db.create_user(
             full_name=full_name,
             username=username,
             chat_id=user.id,
             lang='uz'
         )
-        return None  # yoki return "created"
+        return None  # or return "created"
