@@ -19,7 +19,7 @@ class Database:
     def get_users(self):
         self.cur.execute("""SELECT * FROM users""")
         users = dict_fetchall(self.cur)
-        return users    
+        return users
 
     def get_channels(self):
         self.cur.execute("""SELECT * FROM channels; """, )
@@ -46,6 +46,3 @@ def dict_fetchone(cursor):
         return False
     columns = [col[0] for col in cursor.description]
     return dict(zip(columns, row))
-
-
-db = Database('insta_save.db')
